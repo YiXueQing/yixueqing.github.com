@@ -416,6 +416,7 @@ body {
     background-color:#53BED6;
     margin:0;
     padding:0;
+    cursor: default;
     float:right;
     display:block;
 }
