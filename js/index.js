@@ -40,8 +40,8 @@
     });
 
     Vue.component('project-bar' , {
-        props:['site'],
-        template:'<a class="project-bar" target="_blank" :href="site"></a>'
+        props:['src' , 'ul'],
+        template:'<a target="_blank" :href="ul"><img :src="src" alt="image01"><div>{{ ul }}</div></a>'
     });
 
     var app = new Vue({
