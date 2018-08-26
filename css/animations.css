@@ -1,0 +1,26 @@
+@keyframes banner {
+    0% {
+        background-position: left 0 bottom;
+    }
+    100% {
+        background-position: left -1500px bottom;
+    }
+}
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes topIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
