@@ -1,0 +1,135 @@
+body{
+    width:100%;
+    height:100%;
+    margin:0;
+    padding:0;
+}
+.fl{
+    float:left;
+}
+.fr{
+    float:right;
+}
+.layer{
+    width:424px;
+    height:424px;
+    padding:24px 24px;
+    background-color:#333333;
+    border-radius: 50%;
+    margin:40px auto 0 auto;
+    position:relative;
+}
+.layer .casket{
+    width:424px;
+    height:424px;
+}
+.layer .cell{
+    width:200px;
+    height:200px;
+}
+.layer .cell.first{
+    background-color:#00A74A;
+    border-top-left-radius: 100%;
+    margin-bottom:24px;
+}
+.layer .cell.second{
+    background-color:#9F0F17;
+    border-top-right-radius: 100%;
+    margin-bottom:24px;
+}
+.layer .cell.third{
+    background-color:#CCA707;
+    border-bottom-left-radius: 100%;
+}
+.layer .cell.fourth{
+    background-color:#094A8F;
+    border-bottom-right-radius: 100%;
+}
+.layer .cell.enabled{
+    cursor: pointer;
+}
+.layer .cell.enabled:active{
+    filter:brightness(2);!important;
+}
+.operation{
+    width:220px;
+    height:220px;
+    border:12px solid #333333;
+    border-radius: 50%;
+    position:absolute;
+    top:50%;
+    left:50%;
+    margin:-121px 0 0 -121px;
+    background-color:#ECE7EE;
+}
+.operation .motif{
+    height:104px;
+    line-height: 134px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 32px;
+}
+.operation .handle{
+    width:100%;
+    height:62px;
+    text-align:center;
+}
+.operation .handle .count{
+    width:58px;
+    height:62px;
+    margin:0 5px 0 24px;
+}
+.operation .handle .count .sum{
+    width:58px;
+    height:40px;
+    line-height: 40px;
+    font-size:20px;
+    font-weight:bold;
+    color:#DC0D1D;
+    border-radius: 8px;
+    background-color:#32050C;
+}
+.operation .handle .count .word{
+    height:17px;
+    line-height: 17px;
+    font-size:12px;
+    margin-top:5px;
+}
+.fastener{
+    width:50px;
+    height:62px;
+    margin-right:3px;
+}
+.fastener .btn{
+    width:20px;
+    height:20px;
+    border:4px solid #333333;
+    background-color:#FC0102;
+    margin:5px 11px 0 11px;
+    border-radius: 50%;
+    position:relative;
+}
+.fastener .strict.btn{
+    background-color:#FFFF00;
+}
+.fastener .strict .mark{
+    width: 6px;
+    height: 6px;
+    background-color: #32050C;
+    border-radius: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border: 2px solid #222;
+    top: -18px;
+}
+.fastener .strict.active .mark{
+    background-color:red;
+}
+.fastener .word{
+    height:17px;
+    line-height: 17px;
+    font-size:12px;
+    margin-top:12px;
+}

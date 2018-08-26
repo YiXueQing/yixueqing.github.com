@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #333333;
+}
+
+.reveal {
+    padding-top: 50px;
+    width: 100%;
+    height: 68px;
+}
+
+.region {
+    display: inline-block;
+    padding: 0 35px;
+    height: 68px;
+}
+
+p {
+    padding: 0;
+    margin: 0;
+    color: #ffffff;
+}
+
+.sum {
+    height: 42px;
+    line-height: 42px;
+    padding-top: 5px;
+    font-size: 30px;
+    position: relative;
+    color: #ffffff;
+}
+
+.count {
+    font-size: 18px;
+    position: absolute;
+    bottom: 0;
+    cursor: pointer;
+}
+
+.count.left {
+    left: 0;
+}
+
+.count.right {
+    right: 0;
+}
+
+.interval {
+    width: 100%;
+    height: 300px;
+    padding-top: 28px;
+}
+
+.countDown {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 2px solid #99CC00;
+    cursor: pointer;
+    position: relative;
+}
+
+p.tip {
+    padding-top: 60px;
+    font-size: 50px;
+    position: relative;
+}
+
+p.time {
+    font-size: 56px;
+    padding-top: 64px;
+    position: relative;
+}
+
+
+.countDown .chunk-wrap {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.countDown .chunk-wrap .chunk {
+    width: 100%;
+    height: 0;
+    background-color: #99CC00;
+    display: block;
+    position: absolute;
+    bottom: 0;
+}

@@ -3,10 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="./css/index.css"/>
 </head>
 <body>
-<div>
-    HelloWorld
+<div id="container">
+    <div class="reveal" id="Home">
+        <div id="title" align="center">
+            <div id="substance">
+                <a id="classify" v-for="todo in todos" :href="todo.src">
+                    {{ todo.text }}
+                </a>
+            </div>
+        </div>
+
+        <div class="name">个人作品</div>
+        <p class="illustrate">熟练应用HTML5 和 CSS3 做出符合上线要求的网站和移动端web 页面，以及运用js 实现前后端分离的 web 应用，熟练使用 Echarts 数据图表插件，ECMAScript6 开发和React 框架开发以及Bable 工具编译</p>
+        <div class="hint">下一页</div>
+        <div class="press">
+            <a class="page-btn" href="#About"></a>
+        </div>
+    </div>
+
+    <div class="about" id="About">
+        <div class="head">关于我</div>
+
+        <div class="present">
+            <div class="face-image">
+                <div class="code"></div>
+            </div>
+
+            <div class="introduce">
+                <p class="item">I am jessica, I live in Newyork. I am WP Theme Developer, UI/UX Developer, Internet Consultant.</p>
+                <p class="li">We are a professional Software comapny with the best talent and most modern technology for online solutions & focused on providing clients with effective online marketing solutions.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="technique" id="Skills">
+        <div class="skill">
+            <div class="title">我的技能</div>
+            <div id="circle" class="art">
+                <process-bar value="50" name="React"></process-bar>
+                <process-bar value="50" name="ECMAScript6"></process-bar>
+                <process-bar value="50" name="Vue"></process-bar>
+                <process-bar value="70" name="JavaScript"></process-bar>
+                <process-bar value="100" name="css"></process-bar>
+                <process-bar value="100" name="HTML"></process-bar>
+            </div>
+        </div>
+    </div>
+
+    <div class="completion">
+        <div class="group">
+            <div class="top-lump">
+                <div class="explain">
+                    <div class="sum">79</div>
+                    <div class="design">PROJECTS</div>
+                    <div class="seat">
+                        <div class="round">
+                            <div class="square"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lump left">
+                <div class="explain">
+                    <div class="sum">79</div>
+                    <div class="design">CLIENTS</div>
+                </div>
+                <div class="seat">
+                    <div class="round">
+                        <div class="square"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lump right">
+                <div class="explain">
+                    <div class="sum">100%</div>
+                    <div class="design">SATISFACTION</div>
+                </div>
+                <div class="seat">
+                    <div class="round">
+                        <div class="square"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="project" id="PROJECTS">
+        <div class="title">作品展示</div>
+        <div class="item">
+            <div class="include">
+                <projects site="http://www.baidu.com" src="./images/search.png"></projects>
+                <projects site="http://www.baidu.com"></projects>
+                <projects site="http://www.baidu.com"></projects>
+                <projects site="http://www.baidu.com"></projects>
+                <projects site="http://www.baidu.com"></projects>
+                <projects site="http://www.baidu.com"></projects>
+                <projects site="http://www.baidu.com"></projects>
+                <projects site="http://www.baidu.com"></projects>
+                <projects site="http://www.baidu.com"></projects>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact" id="Contact">
+        <div class="title">联系我</div>
+        <div class="region">
+            <div class="left-info">
+                <div class="tip">名字：</div>
+                <input type="text" class="entry"/>
+                <div class="tip">邮箱：</div>
+                <input type="text" class="entry"/>
+                <div class="tip">传真：</div>
+                <input type="text" class="entry"/>
+            </div>
+
+            <div class="right-info">
+                <div class="tip">主题：</div>
+                <textarea class="import"></textarea>
+                <div class="handle">
+                    <button class="submit-btn">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p class="copyright">Copyright © 2018 YiXueQing</p>
 </div>
+
+<div class="location">
+    <a class="chose-btn" href="#Home"></a>
+    <a class="chose-btn" href="#About"></a>
+    <a class="chose-btn" href="#Skills"></a>
+    <a class="chose-btn" href="#Skills"></a>
+    <a class="chose-btn bottom" href="#Contact"></a>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript" charset='utf-8' src="./js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" charset='utf-8' src="./js/index.js"></script>
 </body>
 </html>
