@@ -80,6 +80,10 @@
 	line-height: 32px;
 	font-size:24px;
 	color:#ffffff;
+	opacity: 0.8;
+}
+.dg-container nav .fillet span:hover{
+	opacity: 1;
 }
 /*
 .dg-container nav span{
