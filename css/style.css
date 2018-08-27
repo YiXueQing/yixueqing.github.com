@@ -59,13 +59,28 @@
 	display: block;
 }
 .dg-container nav{
-	width: 58px;
+	width: 108px;
 	position: absolute;
 	z-index: 1000;
 	bottom: 40px;
 	left: 50%;
-	margin-left: -29px;
+	margin-left: -54px;
 }
+.dg-container nav .fillet{
+	width:30px;
+	height:30px;
+	line-height: 30px;
+	text-align:center;
+	border-radius: 50%;
+	border:1px solid #DDDDDD;
+	margin:0 10px;
+	float:left;
+}
+.dg-container nav .fillet span{
+	font-size:24px;
+	color:#ffffff;
+}
+/*
 .dg-container nav span{
 	text-indent: -9000px;
 	float: left;
@@ -82,3 +97,4 @@
 	background-position: top right;
 	margin-left: 10px;
 }
+ */
