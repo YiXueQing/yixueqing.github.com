@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>易雪晴 - 表格排序、分页、行合并、列合并</title>
+    <style>
+        .card {
+            background-color: #ffffff;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,21,41,.08);
+            padding: 10px;
+        }
+        .card .header {
+            position: relative;
+            height: 32px;
+            line-height: 32px;
+            display: flex;
+            align-items: center;
+            flex-direction: row-reverse;
+        }
+        .card .header .title {
+            height: 32px;
+            line-height: 32px;
+            color: #333333;
+            font-size: 16px;
+            position: absolute;
+            left: 6px;
+        }
+        .card .header .btn {
+            color: #fff;
+            background: #1890ff;
+            border-color: #1890ff;
+            text-shadow: 0 -1px 0 rgba(0,0,0,.12);
+            box-shadow: 0 2px 0 rgba(0,0,0,.045);
+            margin-left: 10px;
+            min-width: 76px;
+            text-align: center;
+            border-radius: 4px;
+            user-select: none;
+            cursor: default;
+            font-size: 14px;
+        }
+        .card .header .btn:hover {
+            background: #40a9ff;
+            border-color: #40a9ff;
+        }
+        .card .header .btn:active {
+            background: #096dd9;
+            border-color: #096dd9;
+        }
+        .card .body {
+            padding: 10px 0;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            text-align: left;
+            border-collapse: separate;
+            border-spacing: 0;
+            table-layout: auto;
+            font-size: 14px;
+            color: #333333;
+            border-top: 1px solid #F0F0F0;
+            border-left: 1px solid #F0F0F0;
+        }
+        table tr {
+            width: 100%;
+            text-align: left;
+            border-collapse: separate;
+            border-spacing: 0;
+            table-layout: auto;
+            height: 46px;
+            line-height: 46px;
+        }
+        table td {
+            padding: 0 10px;
+            cursor: default;
+            user-select: none;
+            border-bottom: 1px solid #F0F0F0;
+            border-right: 1px solid #F0F0F0;
+        }
+        table thead tr {
+            background-color: #FAFAFA;
+        }
+        table thead tr td.desc:after {
+            content: " ↓";
+        }
+        table thead tr td.asc:after {
+            content: " ↑";
+        }
+
+        .pages {
+            display: flex;
+            margin-top: 10px;
+        }
+        .pages .btn {
+            color: #fff;
+            background: #1890ff;
+            border-color: #1890ff;
+            text-shadow: 0 -1px 0 rgba(0,0,0,.12);
+            box-shadow: 0 2px 0 rgba(0,0,0,.045);
+            text-align: center;
+            border-radius: 4px;
+            user-select: none;
+            cursor: default;
+            font-size: 12px;
+            height: 28px;
+            line-height: 28px;
+            padding: 0 6px;
+        }
+        .pages .btn:hover {
+            background: #40a9ff;
+            border-color: #40a9ff;
+        }
+        .pages .btn:active {
+            background: #096dd9;
+            border-color: #096dd9;
+        }
+        .pages input {
+            height: 26px;
+            border: 1px solid #dddddd;
+            border-radius: 4px;
+            width: 40px;
+            outline: none;
+            text-align: center;
+            margin: 0 10px;
+            padding: 0;
+        }
+        .pages input:focus {
+            border: 1px solid #40a9ff;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="card">
+            <div class="header">
+                <div class="title">易雪晴 - 数据列表处理演示 (点击编号或数据名称可排序)</div>
+                <div class="btn" onclick="mergeRow()">合并省份</div>
+            </div>
+            <div class="body">
+                <table>
+                    <thead>
+                    <tr>
+                        <td class="center" data-key="id" onclick="sortList(this)">编号</td>
+                        <td data-key="name" onclick="sortList(this)">数据名称</td>
+                        <td class="center" >省份</td>
+                        <td>状态</td>
+                        <td>创建时间</td>
+                        <td>操作</td>
+                    </tr>
+                    </thead>
+                    <!-- 用于存放数据-->
+                    <tbody id="list_body"></tbody>
+                </table>
+
+                <div class="pages">
+                    <div class="btn prev" onclick="prevPage()">上一页</div>
+                    <div><input type="text" id="page" value="1" disabled/></div>
+                    <div class="btn next" onclick="nextPage()">下一页</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 定义数据行模版，便于元素节点追加 -->
+    <template id="row">
+        <tr>
+            <td class="id center"></td>
+            <td class="name"></td>
+            <td class="province center"></td>
+            <td class="status"></td>
+            <td class="time"></td>
+            <td><span class="link">查看详情</span></td>
+        </tr>
+    </template>
+
+    <script>
+        // 数据列表
+        const pageList = [];
+        // 默认分页条数
+        const pageNumbers = 10;
+
+        // 用于加载列表数据
+        function loadPageList(page, merge) {
+            // 计算当前起始位置和结束位置
+            let start = (page - 1) * pageNumbers, end = start + pageNumbers;
+            // 判断是否页数是否合规
+            if (start >= 0 && start < pageList.length) {
+                // 定义 fragment 用来存放行元素，最后一次性添加到表格中
+                // 这样做性能更好
+                let fragment = document.createDocumentFragment();
+                let lastProvince = null;
+                // 获取当前分页中的数据并渲染
+                for (let i = start; i < end; i++) {
+                    let data = pageList[i];
+                    // 获取模版
+                    let template = document.getElementById('row');
+                    // 拷贝模版内元素
+                    let row = template.content.cloneNode(true);
+                    row.querySelector('.id').textContent = data.id;
+                    row.querySelector('.name').textContent = data.name;
+                    if (lastProvince && lastProvince.textContent === data.province) {
+                        let rowspan = Number(lastProvince.getAttribute('rowspan') || 1);
+                        lastProvince.setAttribute('rowspan', rowspan + 1);
+                        row.querySelector('.province').remove();
+                    } else {
+                        if (merge) lastProvince = row.querySelector('.province');
+                        row.querySelector('.province').textContent = data.province;
+                    }
+                    row.querySelector('.status').textContent = data.status;
+                    row.querySelector('.time').textContent = data.time;
+                    fragment.appendChild(row);
+                }
+
+                // 更新页数
+                document.getElementById('page').value = page;
+
+                // 清空当前表格中的数据
+                let dom = document.getElementById('list_body');
+                dom.innerHTML = '';
+                dom.appendChild(fragment);
+            }
+        }
+
+        // 排序
+        function sortList(el) {
+            // 获取当前页数
+            let page = parseInt(document.getElementById('page').value);
+            let column = el.dataset.key;
+            // 清除其它列的排序标识
+            let sortColumn = el.parentElement.querySelector('td.desc,td.asc');
+            if (sortColumn && sortColumn !== el) sortColumn.classList.remove('desc', 'asc');
+            // 对表格进行排序
+            if (el.classList.contains('desc')) {
+                // 升序
+                pageList.sort(function (a, b) {
+                    if (typeof a[column] === 'number') return a[column] - b[column];
+                    return a[column].localeCompare(b[column]);
+                });
+                el.classList.remove('desc');
+                el.classList.add('asc');
+            } else {
+                // 倒序
+                pageList.sort(function (a, b) {
+                    if (typeof a[column] === 'number') return b[column] - a[column];
+                    return b[column].localeCompare(a[column]);
+                });
+                el.classList.add('desc');
+                el.classList.remove('asc');
+            }
+
+
+            loadPageList(page);
+        }
+
+        // 合并单元格
+        function mergeRow() {
+            // 获取当前页数
+            let page = parseInt(document.getElementById('page').value);
+            loadPageList(page, true);
+        }
+
+        // 上一页
+        function prevPage() {
+            let el = document.getElementById('page');
+            loadPageList(parseInt(el.value) - 1);
+        }
+
+        // 下一页
+        function nextPage() {
+            let el = document.getElementById('page');
+            loadPageList(parseInt(el.value) + 1);
+        }
+        
+        (function () {
+            // 定义省份
+            const provinces = ['北京', '北京', '湖北', '湖北', '湖北', '湖北', '湖南', '湖南', '湖南', '江西'];
+            // 生成 100 条模拟数据
+            for (let i = 0; i < 100; i++) {
+                pageList.push({
+                    id: i + 1,
+                    name: '数据' + (i + 1),
+                    province: provinces[(i + 1) % 10],
+                    status: '运行中',
+                    time: '2020-09-14 18:50:15'
+                });
+            }
+
+            // 加载第一页数据
+            loadPageList(1);
+        })();
+    </script>
+</body>
+</html>
